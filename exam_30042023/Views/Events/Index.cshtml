@@ -1,0 +1,82 @@
+﻿@model IEnumerable<exam_30042023.Data.Models.Event>
+@inject Microsoft.AspNetCore.Identity.SignInManager<exam_30042023.Data.Models.User> signInManager;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Events list</h1>
+
+<p>
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+    {
+        <a asp-action="Create">Create New</a>
+
+    }
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PremiereDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PremiereDate)
+            </td>
+            <td>
+                <img class="card-img-top" heigt="20" width="20" src="@item.GetCatImage()" alt="Card image cap">
+            </td>
+                <td>
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                    {
+                        <div class="form-group">
+                            <input type="submit" value="Reserved tickets" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <p> limited access </p>
+                        </div>
+                    }
+                </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">
+                        <button class="btn btn-block btn-success" type="submit" aria-label="Edit">Edit</button>
+                    </a>
+                    |
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        <button class="btn btn-block btn-primary" type="submit" aria-label="Details">Details</button>
+                    </a>
+                    |
+                    <a asp-action="Delete" asp-route-id="@item.Id">
+                        <button class="btn btn-block btn-danger" type="submit" aria-label="Delete">Delete</button>
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

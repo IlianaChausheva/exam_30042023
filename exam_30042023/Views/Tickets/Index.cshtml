@@ -1,0 +1,50 @@
+﻿@model IEnumerable<exam_30042023.Data.Models.Ticket>
+@inject Microsoft.AspNetCore.Identity.SignInManager<exam_30042023.Data.Models.User> signInManager;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tickets list</h1>
+<p>
+     <a asp-action="Create">Create New</a>
+ </p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Event)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">
+                        <button class="btn btn-block btn-success" type="submit" aria-label="Edit">Edit</button>
+                    </a>
+                    |
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        <button class="btn btn-block btn-primary" type="submit" aria-label="Details">Details</button>
+                    </a>
+                    |
+                    <a asp-action="Delete" asp-route-id="@item.Id">
+                        <button class="btn btn-block btn-danger" type="submit" aria-label="Delete">Delete</button>
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
